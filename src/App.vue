@@ -13,6 +13,7 @@
 import { defineComponent } from 'vue';
 import Collection from '@/types/Collection';
 import UsersList from './components/UsersList.vue';
+import axios from 'axios';
 
 export default defineComponent({
   name: 'App',
@@ -60,10 +61,8 @@ export default defineComponent({
       localStorage.setItem('collection', JSON.stringify(updatedData));
     },
     async getDataFromServer(): Promise<Collection[]> {
-      const response = await fetch('https://reqres.in/api/users?page=2');
-      if (!response.ok) throw new Error('Failed to fetch!');
-      const body = await response.json();
-      return body.data;
+      const response = await axios.get('https://reqres.in/api/users?page=2');
+      return response.data.data;
     },
   },
   mounted() {
